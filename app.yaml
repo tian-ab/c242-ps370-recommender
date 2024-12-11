@@ -1,0 +1,12 @@
+runtime: python39  # Specify the Python runtime version
+entrypoint: gunicorn -w 2 -k uvicorn.workers.UvicornWorker app:app  # Replace 'app' with your app's filename if needed
+
+handlers:  # Define request handlers
+- url: /.*
+  script: auto  # Automatically direct all traffic to the app
+
+automatic_scaling:  # Optional: Customize scaling behavior
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.75
+  min_instances: 1
+  max_instances: 5
